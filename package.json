@@ -1,0 +1,1 @@
+{"name":"verificador-precos","private":true,"type":"module","scripts":{"test":"node --test test/*.test.mjs","vendor":"sh scripts/fetch-vendor.sh","start":"python3 -m http.server 8080"}}

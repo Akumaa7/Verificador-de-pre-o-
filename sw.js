@@ -1,0 +1,4 @@
+const V='v1',SHELL=['./','index.html','manifest.webmanifest','icon.svg','src/app.js','src/ocr.js','src/parser.js','src/coupon.js','src/compare.js','src/db.js'];
+self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(V);const vend=await fetch('vendor/files.json').then(r=>r.json()).catch(()=>[]);await Promise.all([...SHELL,...vend].map(u=>c.add(u).catch(()=>{})));self.skipWaiting()})()));
+self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k!==V)await caches.delete(k);await clients.claim()})()));
+self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.match(e.request,{ignoreSearch:true}).then(r=>r||fetch(e.request).then(res=>{if(res.ok){const cp=res.clone();caches.open(V).then(c=>c.put(e.request,cp))}return res})))});
